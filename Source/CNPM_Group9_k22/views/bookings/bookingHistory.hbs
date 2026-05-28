@@ -1,0 +1,69 @@
+<!-- filepath: views/bookings/bookingHistory.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử đặt phòng</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/customerSidebar.css">
+</head>
+<body>
+    <div class="layout-wrapper">
+        {{> customerSidebar}}
+        <div class="booking-history p-4">
+            <h2>Lịch sử đặt phòng</h2>
+            <div class="d-flex justify-content-between mb-3">
+                <div class="input-group" style="width: 40%;">
+                    <input type="text" class="form-control" id="searchBooking" placeholder="Tìm kiếm theo từ khóa">
+                    <button class="btn btn-outline-secondary" id="searchBtn">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead class="table-light">
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Room ID</th>
+                        <th>Ngày nhận phòng</th>
+                        <th>Ngày trả phòng</th>
+                        <th>Trạng thái</th>
+                        <th>Giá</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="bookingTableBody">
+                    {{#each bookings}}
+                    <tr>
+                        <td>{{this.booking_id}}</td>
+                        <td>{{this.room_id}}</td>
+                        <td>{{formatDate this.check_in_date}}</td>
+                        <td>{{formatDate this.check_out_date}}</td>
+                        <td>{{this.status}}</td>
+                        <td>{{this.total_price}}</td>
+                        <td>
+                            {{#if (eq this.status "Confirmed")}}
+                            <button class="btn btn-danger" onclick="cancelBooking('{{this.booking_id}}')">Hủy đặt phòng</button>
+                            {{else}}
+                            <button class="btn btn-secondary" disabled>Không khả dụng</button>
+                            {{/if}}
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                <button class="btn btn-secondary btn-sm me-2" id="prevPageBtn">&laquo;</button>
+                <button class="btn btn-secondary btn-sm me-2" id="prevBtn">&lt;</button>
+                <span id="currentPage">1</span>/<span id="totalPages">1</span>
+                <button class="btn btn-secondary btn-sm ms-2" id="nextBtn">&gt;</button>
+                <button class="btn btn-secondary btn-sm ms-2" id="nextPageBtn">&raquo;</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/bookingHistory.js"></script>
+</body>
+</html>

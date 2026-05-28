@@ -1,0 +1,27 @@
+.room-list, .room-edit, .room-add {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; /* Ensure it doesn't overlap with the sidebar */
+    background-color: #f8f9fa;
+    overflow: auto;
+}
+
+.room-add h3, .room-edit h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff; /* Blue text color */
+}
+
+#addRoomForm .form-label, #editRoomForm .form-label {
+    font-weight: bold;
+}
+
+#addRoomForm .form-check, #editRoomForm .form-check {
+    margin-bottom: 5px;
+}
+
+#addRoomForm button, #editRoomForm button {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+}

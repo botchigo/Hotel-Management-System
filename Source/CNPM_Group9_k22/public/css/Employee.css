@@ -1,0 +1,19 @@
+.employee-list {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; /* Ensure it doesn't overlap with the sidebar */
+    background-color: #f8f9fa;
+    overflow: auto;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+.btn-calendar, .btn-edit, .btn-delete {
+    margin-right: 5px;
+}
+
+.modal-body {
+    font-size: 14px;
+}

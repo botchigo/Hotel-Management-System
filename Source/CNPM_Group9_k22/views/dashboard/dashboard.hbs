@@ -1,0 +1,42 @@
+<!-- filepath: views/dashboard/dashboard.hbs -->
+<div class="layout-wrapper">
+    {{> sidebar}}
+    <div class="dashboard p-4">
+        <h2>Dashboard</h2>
+        
+        <!-- Statistics Boxes -->
+        <div class="statistics">
+            <div class="statistics-box">
+                <p>Doanh thu trong ngày</p>
+                <h3>{{stats.dailyStats.dailyRevenue}} VND</h3>
+            </div>
+            <div class="statistics-box">
+                <p>Khách check-in hôm nay</p>
+                <h3>{{stats.dailyStats.checkIns}}</h3>
+            </div>
+            <div class="statistics-box">
+                <p>Phòng đang sử dụng</p>
+                <h3>{{stats.dailyStats.occupiedRooms}}</h3>
+            </div>
+            <div class="statistics-box">
+                <p>Tỷ lệ sử dụng phòng</p>
+                <h3>{{stats.dailyStats.occupancyRate}}%</h3>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts">
+            <div class="room-chart">
+                <h5>Top 5 loại phòng được đặt nhiều nhất</h5>
+                <canvas id="roomChart"></canvas>
+            </div>
+            <div class="revenue-chart">
+                <h5>Doanh thu 6 tháng gần nhất</h5>
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/dashboard.js"></script>

@@ -1,0 +1,48 @@
+<!-- filepath: views/partials/sidebar.hbs -->
+<div class="sidebar">
+    <h4 class="text-white">Admin</h4>
+    <a class="sidebar-link" href="/dashboard">
+        <i class="bi bi-house"></i> Dashboard
+    </a>
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" data-bs-toggle="collapse" data-bs-target="#menu1" aria-expanded="false" aria-controls="menu1">
+                <i class="bi bi-door-open"></i> Quản lý phòng
+            </a>
+            <div class="collapse sidebar-collapse" id="menu1">
+                <ul class="sidebar-sublist ps-3">
+                    <li><a href="/rooms" class="sidebar-sublink">Danh sách phòng</a></li>
+                    <li><a href="/rooms/add" class="sidebar-sublink">Thêm phòng</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" data-bs-toggle="collapse" data-bs-target="#menu2" aria-expanded="false" aria-controls="menu2">
+                <i class="bi bi-person-badge-fill"></i> Quản lý nhân viên
+            </a>
+            <div class="collapse sidebar-collapse" id="menu2">
+                <ul class="sidebar-sublist ps-3">
+                    <li><a href="/employees" class="sidebar-sublink">Danh sách nhân viên</a></li>
+                    <li><a href="/employees/schedules" class="sidebar-sublink">Sắp xếp ca trực</a></li>
+                </ul>
+            </div>
+        </li>
+        <a class="sidebar-link" href="/discounts">
+            <i class="bi bi-percent"></i> Quản lý khuyến mãi
+        </a>
+        <li class="sidebar-item">
+            <a class="sidebar-link" href="#" data-bs-toggle="collapse" data-bs-target="#menu3" aria-expanded="false" aria-controls="menu3">
+                <i class="bi bi-person-vcard"></i> Quản lý người dùng
+            </a>
+            <div class="collapse sidebar-collapse" id="menu3">
+                <ul class="sidebar-sublist ps-3">
+                    <li><a href="/users/list" class="sidebar-sublink">Danh sách người dùng</a></li>
+                    <li><a href="/bookings/all" class="sidebar-sublink">Danh sách đơn hàng</a></li>
+                </ul>
+            </div>
+        </li>
+        <a class="sidebar-link" href="#">
+            <i class="bi bi-boxes"></i> Quản lý dịch vụ
+        </a>
+    </ul>
+</div>

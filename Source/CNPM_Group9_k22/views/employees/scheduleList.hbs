@@ -1,0 +1,132 @@
+<!-- filepath: views/employees/scheduleList.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách lịch trực</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/scheduleEmployee.css">
+</head>
+<body>
+    <div class="layout-wrapper">
+        {{> sidebar}}
+        <div class="schedule p-4">
+            <h2>Danh sách lịch trực</h2>
+            
+            <!-- Search and Filter -->
+            <div class="d-flex justify-content-between mb-3">
+                <div class="input-group" style="width: 30%;">
+                    <input type="text" class="form-control" id="searchEmployee" placeholder="Tìm kiếm theo tên nhân viên...">
+                    <button class="btn btn-outline-secondary" id="searchBtn">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+                <div>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addScheduleModal">
+                        <i class="bi bi-plus"></i> Thêm lịch trực mới
+                    </button>
+                </div>
+                <div class="d-flex align-items-center">
+                    <input type="date" class="form-control me-2" id="dateFilter">
+                    <select class="form-select me-2" id="shiftFilter">
+                        <option value="">Tất cả ca</option>
+                        <option value="Morning">Ca sáng</option>
+                        <option value="Afternoon">Ca chiều</option>
+                        <option value="Evening">Ca tối</option>
+                        <option value="Night">Ca đêm</option>
+                    </select>
+                    <button class="btn btn-primary" id="filterBtn">Lọc</button>
+                </div>
+            </div>
+
+            <!-- Add New Schedule Modal -->
+            <div class="modal fade" id="addScheduleModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thêm lịch trực mới</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addScheduleForm">
+                                <!-- Update the employee select dropdown in Add New Schedule Modal -->
+                                <div class="mb-3">
+                                    <label class="form-label">Nhân viên</label>
+                                    <select class="form-select" id="employeeSelect" required>
+                                        {{#each employees}}
+                                            <option value="{{this.employee_id}}">{{this.name}} ({{this.role}})</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ngày trực</label>
+                                    <input type="date" class="form-control" id="newShiftDate" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ca trực</label>
+                                    <select class="form-select" id="newShift" required>
+                                        <option value="Morning">Ca sáng</option>
+                                        <option value="Afternoon">Ca chiều</option>
+                                        <option value="Evening">Ca tối</option>
+                                        <option value="Night">Ca đêm</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-primary" id="saveNewSchedule">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule Table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tên nhân viên</th>
+                        <th>ID</th>
+                        <th>Vai trò</th>
+                        <th>Ngày trực</th>
+                        <th>Ca trực</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="scheduleTableBody">
+                    {{#each employees}}
+                        {{#each this.schedule}}
+                        <tr>
+                            <td>{{../name}}</td>
+                            <td>{{../employee_id}}</td>
+                            <td>{{../role}}</td>
+                            <td>{{this.date}}</td>
+                            <td>{{this.shift}}</td>
+                            <td>
+                                <a href="/employees/schedule/{{../employee_id}}" class="btn btn-info btn-sm">
+                                    <i class="bi bi-eye"></i> Chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    {{/each}}
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center align-items-center mt-3">
+                <button class="btn btn-secondary btn-sm me-2" id="prevPageBtn">&laquo;</button>
+                <button class="btn btn-secondary btn-sm me-2" id="prevBtn">&lt;</button>
+                <span><span id="currentPage">1</span>/<span id="totalPages">1</span></span>
+                <button class="btn btn-secondary btn-sm ms-2" id="nextBtn">&gt;</button>
+                <button class="btn btn-secondary btn-sm ms-2" id="nextPageBtn">&raquo;</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/scheduleList.js"></script>
+</body>
+</html>

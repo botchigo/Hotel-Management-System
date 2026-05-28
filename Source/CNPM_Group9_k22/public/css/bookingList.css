@@ -1,0 +1,62 @@
+.booking-list {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; /* Ensure it doesn't overlap with the sidebar */
+    background-color: #f8f9fa;
+    overflow: auto;
+}
+
+.booking-list h2 {
+    margin-bottom: 20px;
+}
+
+.booking-list .input-group {
+    margin-bottom: 20px;
+}
+
+.booking-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.booking-list table th, .booking-list table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+}
+
+.booking-list table th {
+    background-color: #343a40;
+    color: white;
+}
+
+.booking-list table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.booking-list .btn {
+    margin-right: 5px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.ms-2 {
+    margin-left: 0.5rem;
+}

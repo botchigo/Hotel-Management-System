@@ -1,0 +1,111 @@
+<!-- filepath: views/discounts/Discount.hbs -->
+<div class="layout-wrapper">
+    {{> sidebar}}
+    <div class="Discount p-4">
+        <h3>Thông tin khuyến mãi</h3>
+    
+        <!-- Nút thêm khuyến mãi -->
+        <button id="addPromoBtn" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addPromoModal">Thêm khuyến mãi</button>
+    
+        <!-- Bảng danh sách khuyến mãi -->
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Mô tả</th>
+                    <th>Mã giảm giá</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Phần trăm giảm giá</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="promoTableBody">
+                {{#each promotions}}
+                <tr>
+                    <td>{{this.discount_id}}</td>
+                    <td>{{this.description}}</td>
+                    <td>{{this.discount_code}}</td>
+                    <td>{{this.valid_from}}</td>
+                    <td>{{this.valid_until}}</td>
+                    <td>{{this.discount_percentage}}%</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="{{this.discount_id}}" data-bs-toggle="modal" data-bs-target="#deletePromoModal">Xóa</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <!-- Phân trang -->
+        <div class="d-flex justify-content-center align-items-center mt-3">
+            <button id="prevPageBtn" class="btn btn-secondary btn-sm me-2">&laquo;</button>
+            <button id="prevBtn" class="btn btn-secondary btn-sm me-2">&lt;</button>
+            <span id="currentPage">1</span>/<span id="totalPages">1</span>
+            <button id="nextBtn" class="btn btn-secondary btn-sm ms-2">&gt;</button>
+            <button id="nextPageBtn" class="btn btn-secondary btn-sm ms-2">&raquo;</button>
+        </div>
+    
+        <!-- Modal thêm khuyến mãi -->
+        <div class="modal fade" id="addPromoModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thêm khuyến mãi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addPromoForm" action="/discounts/add" method="POST">
+                            <div class="mb-3">
+                                <label for="promoDescription" class="form-label">Mô tả</label>
+                                <input type="text" id="promoDescription" name="description" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="promoCode" class="form-label">Mã giảm giá</label>
+                                <input type="text" id="promoCode" name="discount_code" class="form-control" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="promoStart" class="form-label">Ngày bắt đầu</label>
+                                <input type="date" id="promoStart" name="valid_from" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="promoEnd" class="form-label">Ngày kết thúc</label>
+                                <input type="date" id="promoEnd" name="valid_until" class="form-control" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="promoDiscount" class="form-label">Phần trăm giảm giá</label>
+                                <input type="number" id="promoDiscount" name="discount_percentage" class="form-control" required min="0" max="100" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal xóa khuyến mãi -->
+        <div class="modal fade" id="deletePromoModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Xóa khuyến mãi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Bạn có chắc chắn muốn xóa khuyến mãi này không?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form id="deletePromoForm" action="/discounts/delete/{{this.discount_id}}" method="POST">
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>                                    
+    </div>
+</div>
+<script src="/js/Discount.js"></script>

@@ -1,0 +1,176 @@
+<!-- filepath: views/employees/employeeList.hbs -->
+<div class="layout-wrapper">
+    {{> sidebar}}
+    <div class="employee-list p-4">
+        <h2 class="mb-4">Danh sách nhân viên</h2>
+        <div class="d-flex justify-content-between mb-3">
+            <div class="input-group" style="width: 30%;">
+                <input type="text" class="form-control" id="searchEmployee" placeholder="Tìm kiếm nhân viên...">
+                <button class="btn btn-outline-secondary" id="searchBtn">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+            <div class="d-flex align-items-center">
+                <select class="form-select me-2" id="roleFilter" style="width: 150px;">
+                    <option value="">Chọn vai trò</option>
+                    <option value="Tiếp tân">Tiếp tân</option>
+                    <option value="Lao công">Lao công</option>
+                    <option value="Bảo vệ">Bảo vệ</option>
+                    <option value="Bảo dưỡng">Bảo dưỡng</option>
+                </select>
+                <button class="btn btn-primary" id="filterButton" style="margin-right: 5px;">Lọc</button>
+                <button class="btn btn-success ms-auto" data-bs-toggle="modal" data-bs-target="#addEmployeeModal"><i class="bi bi-plus-circle" style="margin-right: 5px;"></i>Thêm nhân viên</button>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Vai trò</th>
+                    <th>Hệ số lương</th>
+                    <th>Đánh giá hiệu suất</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTableBody">
+                {{#each employees}}
+                <tr>
+                    <td>{{this.employee_id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.role}}</td>
+                    <td>{{this.salary_coefficient}}</td>
+                    <td>{{this.performance_rating}}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editEmployeeModal" onclick="editEmployee('{{this.employee_id}}')"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" onclick="confirmDelete('{{this.employee_id}}')"><i class="bi bi-trash"></i></button>
+                        <a href="/employees/schedule/{{this.employee_id}}" class="btn btn-info btn-sm"><i class="bi bi-calendar"></i></a> <!-- Update this line -->
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center align-items-center mt-3">
+            <button class="btn btn-secondary btn-sm me-2" id="prevPageBtn">&laquo;</button>
+            <button class="btn btn-secondary btn-sm me-2" id="prevBtn">&lt;</button>
+            <span id="currentPage">1</span>/<span id="totalPages">1</span>
+            <button class="btn btn-secondary btn-sm ms-2" id="nextBtn">&gt;</button>
+            <button class="btn btn-secondary btn-sm ms-2" id="nextPageBtn">&raquo;</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal thêm nhân viên -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">Thêm nhân viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addEmployeeForm">
+                    <div class="mb-3">
+                        <label for="addEmployeeName" class="form-label">Tên</label>
+                        <input type="text" class="form-control" id="addEmployeeName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addEmployeeRole" class="form-label">Vai trò</label>
+                        <select id="addEmployeeRole" class="form-select" required>
+                            <option value="Tiếp tân">Tiếp tân</option>
+                            <option value="Lao công">Lao công</option>
+                            <option value="Bảo vệ">Bảo vệ</option>
+                            <option value="Bảo dưỡng">Bảo dưỡng</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addSalaryCoefficient" class="form-label">Hệ số lương</label>
+                        <input type="number" class="form-control" id="addSalaryCoefficient" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addPerformanceRating" class="form-label">Đánh giá hiệu suất</label>
+                        <select id="addPerformanceRating" class="form-select" required>
+                            <option value="Excellent">Xuất sắc</option>
+                            <option value="Good">Tốt</option>
+                            <option value="Needs Improvement">Cần cải thiện</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="saveAddEmployeeButton">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal chỉnh sửa nhân viên -->
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEmployeeModalLabel">Chỉnh sửa nhân viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editEmployeeForm">
+                    <div class="mb-3">
+                        <label for="editEmployeeId" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="editEmployeeId" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmployeeName" class="form-label">Tên</label>
+                        <input type="text" class="form-control" id="editEmployeeName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmployeeRole" class="form-label">Vai trò</label>
+                        <select id="editEmployeeRole" class="form-select" required>
+                            <option value="Tiếp tân">Tiếp tân</option>
+                            <option value="Lao công">Lao công</option>
+                            <option value="Bảo vệ">Bảo vệ</option>
+                            <option value="Bảo dưỡng">Bảo dưỡng</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editSalaryCoefficient" class="form-label">Hệ số lương</label>
+                        <input type="number" class="form-control" id="editSalaryCoefficient" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPerformanceRating" class="form-label">Đánh giá hiệu suất</label>
+                        <select id="editPerformanceRating" class="form-select" required>
+                            <option value="Excellent">Xuất sắc</option>
+                            <option value="Good">Tốt</option>
+                            <option value="Needs Improvement">Cần cải thiện</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="saveEditEmployeeButton">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xác nhận xóa nhân viên -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Xóa nhân viên</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn muốn xóa nhân viên này không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/employeeList.js"></script>

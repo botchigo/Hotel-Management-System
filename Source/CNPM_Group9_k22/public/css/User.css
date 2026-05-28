@@ -1,0 +1,51 @@
+.user-list {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px; /* Ensure it doesn't overlap with the sidebar */
+    background-color: #f8f9fa;
+    overflow: auto;
+}
+
+.user-list h2 {
+    margin-bottom: 20px;
+}
+
+.user-list .input-group {
+    margin-bottom: 20px;
+}
+
+.user-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-list table th, .user-list table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+}
+
+.user-list table th {
+    background-color: #343a40;
+    color: white;
+}
+
+.user-list table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.user-list .btn {
+    margin-right: 5px;
+}
+
+.modal .modal-header {
+    background-color: #343a40;
+    color: white;
+}
+
+.modal .modal-footer .btn-secondary {
+    background-color: #6c757d;
+}
+
+.modal .modal-footer .btn-danger {
+    background-color: #dc3545;
+}
